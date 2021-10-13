@@ -6,36 +6,6 @@ describe Movie do
         Movie.should respond_to(:movie_with_id)
     end
 
-    describe "movie with ratings" do
-        it "should return movie only with given ratings" do
-            Movie.create('title': 'movie1', 'director': 'director1')
-            id_1 =  Movie.where('director': 'director1').pluck('id')[0]
-            expect( Movie.movie_with_id(id_1.to_s) ).to eq('movie1')
-        end
-    end
-
-    it "responds to with_ratings" do
-        Movie.should respond_to(:with_ratings)
-    end
-
-    describe "movie retirieval with id" do
-        it "should return the movie with given id" do
-            Movie.create('title': 'movie1', 'director': 'director1', 'rating': 'PG')
-            Movie.create('title': 'movie2', 'director': 'director2', 'rating': 'G')
-            Movie.create('title': 'movie3', 'director': 'director3', 'rating': 'R')
-            Movie.create('title': 'movie4', 'director': 'director4', 'rating': 'PG')
-            expect(Movie.with_ratings(['PG'], " ").pluck('title')).to include('movie1')
-            expect(Movie.with_ratings(['PG'], " ").pluck('title')).to include('movie4')
-            expect(Movie.with_ratings(['G'], " ").pluck('title')).to include('movie2')
-            expect(Movie.with_ratings(['R'], " ").pluck('title')).to include('movie3')
-            expect(Movie.with_ratings(['G'], " ").pluck('title')).not_to include('movie1')
-            expect(Movie.with_ratings(['G'], " ").pluck('title')).not_to include('movie4')
-            expect(Movie.with_ratings(['G'], " ").pluck('title')).not_to include('movie3')
-            expect(Movie.with_ratings(['PG'], "title").pluck('title')).not_to include('movie3')
-        end
-    end
-
-
     it "responds to get_similar_movies" do
         Movie.should respond_to(:get_similar_movies)
     end
